@@ -9,7 +9,7 @@ env:
   AWS_REGION: ap-south-1
   ECR_REPOSITORY: my-nginx
   AWS_ACCOUNT_ID: 694900345478
-
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
