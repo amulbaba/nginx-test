@@ -11,6 +11,7 @@ env:
   AWS_ACCOUNT_ID: 694900345478
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+  IMAGE_TAG: ${{ github.sha }}
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -40,3 +41,8 @@ jobs:
     - name: Push Docker image to ECR
       run: |
         docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:${{ github.sha }}
+        - name: Update deployment image tag
+     - name: Update deployment image tag
+      run: |
+        sed -i "s|image: .*aws_eks_test_repo:.*|image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG|" nginx-deployment.yaml
+        cat nginx-deployment.yaml
